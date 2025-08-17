@@ -92,7 +92,7 @@ rec {
 
       use32Bit ? false,
       windowsVersion ? "win10",
-      wineprefix ? "$HOME/.nix-csp-wine/${pname}-${version}",
+      wineprefix ? "$HOME/.nix-wine/${pname}-${version}",
 
       meta,
       derivationArgs ? { },

@@ -49,6 +49,8 @@ buildWineApplication rec {
     windowsVersion
     ;
 
+  wineprefix = "$HOME/.nix-csp-wine/${pname}-v${lib.versions.major version}";
+
   withCjk = true;
 
   executable = ''${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe'';
