@@ -15,28 +15,28 @@ and the other for **Clip Studio Paint**:
 - `clip-studio-paint`
 - `clip-studio`
 
-## Transfering settings and license between prefixes
+Clip studio paint's `Program Files` (`.exe`) are saved to the nix store during
+build. The wine prefixes are only used to store user settings, brushes, etc, so
+you can safely delete/recreate them without affecting clip studio paint's
+installation.
 
-This package saves clip studio paint's `Program Files` to the nix store during
-build. Wine prefixes are created per user on their first run and are only used
-to store user settings, brushes, etc.
+## Transfering settings between prefixes
 
-That means you can just copy/move your wine prefixes to transfer your settings.
+Wine prefixes are created during the first run for each user at
+`~/.nix-csp-wine/clip-studio-paint-vX`, where `X` is the major version.
 
-The wine prefixes are located under `~/.nix-csp-wine/clip-studio-paint-X.Y.Z`,
-where `X.Y.Z` is the version. So let's suppose you upgraded from `1.13.2` to
-`1.15.1`, then you just need to:
+Let's suppose you upgraded from `1.13.2` to `2.0.6`, then you just need to:
 
 ```sh
-cp -r ~/.nix-csp-wine/clip-studio-paint-1.{13.2,15.1}
+cp -r ~/.nix-csp-wine/clip-studio-paint-v{1,2}
 ```
 
 > [!NOTE]
 > The command above is equivalent to
 > ```sh
 > cp -r \
->   ~/.nix-csp-wine/clip-studio-paint-1.13.2 \
->   ~/.nix-csp-wine/clip-studio-paint-1.15.1
+>   ~/.nix-csp-wine/clip-studio-paint-v1 \
+>   ~/.nix-csp-wine/clip-studio-paint-v2
 > ``` 
 
 ## Fine-grained transfer
