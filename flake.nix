@@ -24,10 +24,15 @@
             clip-studio-paint-v2
             clip-studio-paint-v3
             clip-studio-paint-v4
-            buildClipStudioPaint
             ;
         }
       );
+
+      legacyPackages = forAllSystems (system: {
+        inherit (pkgsFor.${system}.callPackage ./pkgs/clip-studio-paint { })
+          buildClipStudioPaint
+          ;
+      });
 
       formatter = forAllSystems (system: pkgsFor.${system}.nixfmt-tree);
     };
