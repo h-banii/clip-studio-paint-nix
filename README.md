@@ -41,10 +41,14 @@ cp -r ~/.nix-csp-wine/clip-studio-paint-v{1,2}
 
 ## Fine-grained transfer
 
+Follow this in case you already have clip studio paint installed on another
+wine prefix or Windows partition and wish to copy the minimum amount of files
+required for it to work
+
 ### User settings
 
-In order to import your brushes and settings from a previous wine prefix (or
-Windows installation) you need to copy this folder
+In order to import your brushes and settings from a previous wine prefix you
+need to copy this folder
 - `drive_c/users/$USER/AppData/Roaming/CELSYSUserData`
 
 ### Perpetual license
