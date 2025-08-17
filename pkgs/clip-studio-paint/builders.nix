@@ -142,6 +142,9 @@ rec {
     stdenvNoCC.mkDerivation {
       inherit pname version desktopItems;
 
+      allowSubstitutes = false;
+      preferLocalBuild = true;
+
       nativeBuildInputs = lib.optional (desktopItems != [ ]) copyDesktopItems;
 
       buildCommand = ''
