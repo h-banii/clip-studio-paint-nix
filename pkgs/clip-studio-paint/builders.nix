@@ -106,6 +106,7 @@ rec {
               tricksString = lib.lists.foldl (elm: acc: acc + toString (elm)) "" tricks;
             in
             ''
+              mkdir -p "$WINEPREFIX"
               wineboot -u
               winecfg /v ${windowsVersion}
             ''
