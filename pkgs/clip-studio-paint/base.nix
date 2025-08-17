@@ -10,12 +10,12 @@
   pname ? "clip-studio-paint",
   version,
   installer,
+  winePackage ? wineWowPackages.unstable,
+  windowsVersion ? "win81",
   setupLanguage ? "english",
   ...
 }:
 let
-  winePackage = wineWowPackages.unstable;
-
   programFiles = buildInstallShield {
     name = "${pname}-${version}";
 
@@ -42,10 +42,12 @@ let
   };
 in
 buildWineApplication rec {
-  inherit pname version winePackage;
-
-  # In theory, 1.13.2 has windows 10 support, but it's crashing...
-  windowsVersion = "win81";
+  inherit
+    pname
+    version
+    winePackage
+    windowsVersion
+    ;
 
   withCjk = true;
 
