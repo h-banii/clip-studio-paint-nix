@@ -1,5 +1,9 @@
 { callPackage, ... }:
-rec {
+let
   builders = callPackage ./builders.nix { };
-  clip-studio-paint-v1 = callPackage ./base.nix { inherit (builders) buildWineApplication; };
+in
+{
+  clip-studio-paint-v1 = callPackage ./base.nix {
+    inherit (builders) buildWineApplication buildInstallShield;
+  };
 }
