@@ -1,5 +1,6 @@
 {
   lib,
+  symlinkJoin,
   stdenvNoCC,
   runCommand,
   writeShellApplication,
@@ -77,6 +78,7 @@ rec {
       version,
 
       executable,
+      extraExecutables ? { },
 
       desktopItems ? [ ],
 
@@ -94,65 +96,93 @@ rec {
       derivationArgs ? { },
     }:
     let
-      buildScript =
+      mkRunner =
         let
-          tricks = [ ] ++ lib.optional withCjk "cjkfonts" ++ extraTricks;
-          tricksString = lib.lists.foldl (elm: acc: acc + toString (elm)) "" tricks;
+          buildScript =
+            let
+              tricks = [ ] ++ lib.optional withCjk "cjkfonts" ++ extraTricks;
+              tricksString = lib.lists.foldl (elm: acc: acc + toString (elm)) "" tricks;
+            in
+            ''
+              wineboot -u
+              winecfg /v ${windowsVersion}
+            ''
+            + lib.optionalString (tricks != [ ]) ''
+              winetricks --unattended ${tricksString}
+            '';
         in
-        ''
-          wineboot -u
-          winecfg /v ${windowsVersion}
-        ''
-        + lib.optionalString (tricks != [ ]) ''
-          winetricks --unattended ${tricksString}
-        '';
+        { name, command }:
+        writeWineScript {
+          inherit
+            name
+            winePackage
+            wineprefix
+            use32Bit
+            ;
 
-      runner = writeWineScript {
-        inherit winePackage wineprefix use32Bit;
+          text = ''
+            for var in WINEPREFIX WINEARCH; do
+              printf '\e[1;35m%s: \e[0m%s\n' "$var" "''${!var:-""}"
+            done
 
-        name = pname;
+            COMMAND="''${1:-${command}}"
 
-        text = ''
-          for var in WINEPREFIX WINEARCH; do
-            printf '\e[1;35m%s: \e[0m%s\n' "$var" "''${!var:-""}"
-          done
+            build() {
+            ${buildScript}
+            }
 
-          COMMAND="''${1:-${executable}}"
-
-          build() {
-          ${buildScript}
-          }
-
-          case "$COMMAND" in
-            boot|build|rebuild)
-              build
-              ;;
-            *)
-              if [ ! -d "$WINEPREFIX" ]; then
+            case "$COMMAND" in
+              boot|build|rebuild)
                 build
-              fi
-              wine "$COMMAND"
-              ;;
-          esac
+                ;;
+              *)
+                if [ ! -d "$WINEPREFIX" ]; then
+                  build
+                fi
+                eval "$COMMAND"
+                ;;
+            esac
 
-          wineserver -k
+            wineserver -k
+          '';
+        };
+
+      desktopEntries = stdenvNoCC.mkDerivation {
+        pname = "${pname}-desktop-entries";
+        inherit version desktopItems;
+
+        allowSubstitutes = false;
+        preferLocalBuild = true;
+
+        nativeBuildInputs = lib.optional (desktopItems != [ ]) copyDesktopItems;
+
+        buildCommand = ''
+          mkdir $out
+          runHook postInstall
         '';
       };
+
+      mainRunner = mkRunner {
+        name = pname;
+        command = "wine '${executable}'";
+      };
+
+      extraRunners = lib.attrsets.mapAttrsToList (
+        name: value:
+        mkRunner {
+          inherit name;
+          command = "wine '${value}'";
+        }
+      ) extraExecutables;
     in
-    stdenvNoCC.mkDerivation {
-      inherit pname version desktopItems;
+    symlinkJoin {
+      name = "${pname}-${version}";
 
-      allowSubstitutes = false;
-      preferLocalBuild = true;
-
-      nativeBuildInputs = lib.optional (desktopItems != [ ]) copyDesktopItems;
-
-      buildCommand = ''
-        mkdir $out
-        ln -s ${runner}/bin $out/bin
-
-        runHook postInstall
-      '';
+      paths = [
+        desktopEntries
+        mainRunner
+      ]
+      ++ extraRunners;
 
       meta = {
         mainProgram = pname;

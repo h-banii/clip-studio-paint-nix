@@ -52,6 +52,9 @@ buildWineApplication rec {
   withCjk = true;
 
   executable = ''${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe'';
+  extraExecutables = {
+    "clip-studio" = ''${programFiles}/CLIP STUDIO/CLIPStudio.exe'';
+  };
 
   desktopItems = [
     (makeDesktopItem {
