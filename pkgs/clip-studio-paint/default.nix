@@ -31,4 +31,9 @@ in
     version = "3.0.4";
     installerHash = "sha256-Es3QcpTReNi2RgVP0PtInLU/OFAl6beLs2jultKcV+4=";
   };
+
+  clip-studio-paint-v4 = buildClipStudioPaint {
+    version = "4.0.3";
+    installerHash = "sha256-swSj3j6xO56LQPhm5QqONMZ5i3m45McPx7yeDCZl6NA=";
+  };
 }

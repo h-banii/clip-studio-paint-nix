@@ -23,6 +23,7 @@
             clip-studio-paint-v1
             clip-studio-paint-v2
             clip-studio-paint-v3
+            clip-studio-paint-v4
             ;
         }
       );
