@@ -19,7 +19,7 @@
         in
         {
           default = self.packages.${system}.clip-studio-paint-v1;
-          inherit (pkgs.callPackage ./pkgs/clip-studio-paint { }) clip-studio-paint-v1;
+          inherit (pkgs.callPackage ./pkgs/clip-studio-paint { }) clip-studio-paint-v1 clip-studio-paint-v2;
         }
       );
 
