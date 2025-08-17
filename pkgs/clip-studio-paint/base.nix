@@ -7,7 +7,6 @@
   wineWowPackages,
   makeDesktopItem,
 
-  pname ? "clip-studio-paint",
   version,
   installer,
   winePackage ? wineWowPackages.unstable,
@@ -16,6 +15,8 @@
   ...
 }:
 let
+  pname = "clip-studio-paint";
+
   programFiles = buildInstallShield {
     name = "${pname}-${version}";
 
@@ -70,9 +71,9 @@ buildWineApplication rec {
       startupWMClass = "clipstudiopaint.exe";
       categories = [ "Graphics" ];
     })
-    (makeDesktopItem {
+    (makeDesktopItem rec {
       name = "clip-studio";
-      exec = ''${pname} "${programFiles}/CLIP STUDIO/CLIPStudio.exe"'';
+      exec = name;
       icon = fetchurl {
         url = "https://assets.clip-studio.com/favicon.ico";
         hash = "sha256-YESOiN4bEIlheWbDg7iNhjIPUmbeRyVDTUqS+9sa+qk=";
