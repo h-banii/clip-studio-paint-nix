@@ -10,6 +10,7 @@
   version,
   installer,
   winePackage ? wineWowPackages.unstable,
+  installShieldWinePackage ? wineWowPackages.minimal,
   windowsVersion ? "win81",
   setupLanguage ? "english",
   ...
@@ -20,7 +21,7 @@ let
   programFiles = buildInstallShield {
     name = "${pname}-${version}";
 
-    inherit winePackage;
+    winePackage = installShieldWinePackage;
 
     installerExecutable = installer;
 
