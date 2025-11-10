@@ -165,27 +165,26 @@ rec {
         '';
       };
 
-      mainRunner = mkRunner {
-        name = pname;
-        command = "wine '${executable}'";
-      };
-
-      extraRunners = lib.attrsets.mapAttrsToList (
-        name: value:
-        mkRunner {
-          inherit name;
-          command = "wine '${value}'";
-        }
-      ) extraExecutables;
+      runners =
+        lib.attrsets.mapAttrsToList
+          (
+            name: value:
+            mkRunner {
+              inherit name;
+              command = "wine '${value}'";
+            }
+          )
+          (
+            {
+              "${pname}" = executable;
+            }
+            // extraExecutables
+          );
     in
     symlinkJoin {
       name = "${pname}-${version}";
 
-      paths = [
-        mainRunner
-      ]
-      ++ lib.optional (desktopItems != [ ]) desktopEntries
-      ++ extraRunners;
+      paths = runners ++ lib.optional (desktopItems != [ ]) desktopEntries;
 
       meta = {
         mainProgram = pname;
