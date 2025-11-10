@@ -157,7 +157,7 @@ rec {
         allowSubstitutes = false;
         preferLocalBuild = true;
 
-        nativeBuildInputs = lib.optional (desktopItems != [ ]) copyDesktopItems;
+        nativeBuildInputs = [ copyDesktopItems ];
 
         buildCommand = ''
           mkdir $out
@@ -182,9 +182,9 @@ rec {
       name = "${pname}-${version}";
 
       paths = [
-        desktopEntries
         mainRunner
       ]
+      ++ lib.optional (desktopItems != [ ]) desktopEntries
       ++ extraRunners;
 
       meta = {
