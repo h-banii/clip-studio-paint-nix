@@ -7,8 +7,6 @@
   copyDesktopItems,
   wineWowPackages,
   winetricks,
-  fetchurl,
-  callPackage,
   ...
 }:
 rec {
@@ -192,18 +190,4 @@ rec {
       // meta;
     }
     // derivationArgs;
-
-  buildClipStudioPaint =
-    { version, installerHash }:
-    let
-      ver = builtins.replaceStrings [ "." ] [ "" ] version;
-    in
-    callPackage ./base.nix {
-      inherit buildWineApplication buildInstallShield;
-      inherit version;
-      installer = fetchurl {
-        url = "https://vd.clipstudio.net/clipcontent/paint/app/${ver}/CSP_${ver}w_setup.exe";
-        hash = installerHash;
-      };
-    };
 }
