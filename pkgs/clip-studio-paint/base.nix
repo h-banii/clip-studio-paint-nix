@@ -40,7 +40,7 @@ let
         .${setupLanguage} or "0409";
     };
 
-    installerOut = "Program Files/CELSYS/CLIP STUDIO 1.5";
+    programFiles = "Program Files/CELSYS/CLIP STUDIO 1.5";
   };
 in
 buildWineApplication rec {
