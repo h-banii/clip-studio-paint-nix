@@ -8,6 +8,7 @@ in
 rec {
   buildClipStudioPaint =
     {
+      pname ? "clip-studio-paint",
       version,
       installerHash,
       ...
@@ -15,7 +16,7 @@ rec {
     let
       programFiles = programFilesCallPackage ./programFiles.nix (
         {
-          inherit version;
+          inherit pname version;
           installer =
             let
               ver = builtins.replaceStrings [ "." ] [ "" ] version;
@@ -28,7 +29,7 @@ rec {
         // builders
       );
     in
-    callPackage ./base.nix ({ inherit version programFiles; } // builders);
+    callPackage ./base.nix ({ inherit pname version programFiles; } // builders);
 
   clip-studio-paint-v1 = buildClipStudioPaint {
     version = "1.13.2";

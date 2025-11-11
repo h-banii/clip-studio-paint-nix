@@ -1,20 +1,18 @@
 {
+  pname,
   version,
   programFiles,
 
   lib,
   fetchurl,
-  wineWowPackages,
   makeDesktopItem,
+  wineWowPackages,
 
-  buildWineApplication,
   winePackage ? wineWowPackages.unstable,
+  buildWineApplication,
   windowsVersion ? "win81",
   ...
 }:
-let
-  pname = "clip-studio-paint";
-in
 buildWineApplication rec {
   inherit
     pname
