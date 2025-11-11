@@ -1,4 +1,8 @@
 {
+  version,
+  installer,
+}:
+{
   lib,
   buildWineApplication,
   buildInstallShield,
@@ -7,8 +11,6 @@
   wineWowPackages,
   makeDesktopItem,
 
-  version,
-  installer,
   winePackage ? wineWowPackages.unstable,
   installShieldWinePackage ? wineWowPackages.minimal,
   windowsVersion ? "win81",
@@ -23,7 +25,7 @@ let
 
     winePackage = installShieldWinePackage;
 
-    installerExecutable = installer;
+    installerExecutable = fetchurl installer;
 
     installerResponse = callPackage ./iss.nix {
       inherit version;
