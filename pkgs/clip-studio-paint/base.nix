@@ -1,49 +1,19 @@
 {
   version,
-  installer,
-}:
-{
+  programFiles,
+
   lib,
-  buildWineApplication,
-  buildInstallShield,
-  callPackage,
   fetchurl,
   wineWowPackages,
   makeDesktopItem,
 
+  buildWineApplication,
   winePackage ? wineWowPackages.unstable,
-  installShieldWinePackage ? wineWowPackages.minimal,
   windowsVersion ? "win81",
-  setupLanguage ? "english",
   ...
 }:
 let
   pname = "clip-studio-paint";
-
-  programFiles = buildInstallShield {
-    name = "${pname}-${version}";
-
-    winePackage = installShieldWinePackage;
-
-    installerExecutable = fetchurl installer;
-
-    installerResponse = callPackage ./iss.nix {
-      inherit version;
-      langCode =
-        {
-          chinese = "0404";
-          english = "0409";
-          french = "040c";
-          german = "0407";
-          japanese = "0411";
-          korean = "0412";
-          spanish = "040a";
-        }
-        .${setupLanguage} or "0409";
-    };
-
-    programFiles = "Program Files/CELSYS/CLIP STUDIO 1.5";
-  };
 in
 buildWineApplication rec {
   inherit

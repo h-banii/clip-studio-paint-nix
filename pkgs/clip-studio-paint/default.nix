@@ -1,4 +1,7 @@
-{ callPackage, ... }@args:
+{
+  callPackage,
+  programFilesCallPackage ? callPackage,
+}:
 let
   builders = callPackage ./builders.nix { };
 in
@@ -10,22 +13,22 @@ rec {
       ...
     }:
     let
-      ver = builtins.replaceStrings [ "." ] [ "" ] version;
-    in
-    callPackage
-      (import ./base.nix {
-        inherit version;
-        installer = {
-          url = "https://vd.clipstudio.net/clipcontent/paint/app/${ver}/CSP_${ver}w_setup.exe";
-          hash = installerHash;
-        };
-      })
-      (
+      programFiles = programFilesCallPackage ./programFiles.nix (
         {
-          inherit (builders) buildInstallShield buildWineApplication;
+          inherit version;
+          installer =
+            let
+              ver = builtins.replaceStrings [ "." ] [ "" ] version;
+            in
+            {
+              url = "https://vd.clipstudio.net/clipcontent/paint/app/${ver}/CSP_${ver}w_setup.exe";
+              hash = installerHash;
+            };
         }
-        // args
+        // builders
       );
+    in
+    callPackage ./base.nix ({ inherit version programFiles; } // builders);
 
   clip-studio-paint-v1 = buildClipStudioPaint {
     version = "1.13.2";
