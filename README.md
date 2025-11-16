@@ -10,6 +10,21 @@ Nix flake to package clip-studio-paint-v{1..4}
 - `clip-studio-paint-v4`: 4.0.3
 - `default` -> `clip-studio-paint-v1`
 
+You may run any of these packages by
+
+```shell
+nix run github:h-banii/clip-studio-paint-nix#clip-studio-paint-v2
+```
+
+or install them by
+
+```nix
+{ inputs, pkgs, ... }:
+{
+  environment.systemPackages = [ inputs.clip-studio-paint.packages.${pkgs.system}.clip-studio-paint-v4 ];
+}
+```
+
 The package installs 2 scripts and 2 desktop entries, one for **Clip Studio**
 and the other for **Clip Studio Paint**:
 - `clip-studio-paint`
