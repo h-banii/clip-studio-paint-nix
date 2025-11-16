@@ -36,9 +36,7 @@ rec {
 
         runtimeInputs = [ winePackage ] ++ runtimeInputs;
 
-        runtimeEnv = {
-          inherit WINEARCH;
-        };
+        runtimeEnv = { inherit WINEARCH; };
 
         # We need to do it this way because runtimeEnv uses single quotes
         text = ''
@@ -64,9 +62,19 @@ rec {
       installerResponse, # .iss file
       installerOut,
     }:
+    let
+      # https://github.com/Winetricks/winetricks/issues/2226
+      edgeInstallerExecutable = fetchurl {
+        url = "https://web.archive.org/web/20241127085924/https://msedge.sf.dl.delivery.mp.microsoft.com/filestreamingservice/files/c234a7e5-8ebb-49dc-b21c-880622eb365b/MicrosoftEdgeWebView2RuntimeInstallerX86.exe";
+        hash = "sha256-fMCXmuXRQ4f789HS0krNtmGOcSZR2mqojOjlOPjKE3Q=";
+      };
+    in
     runCommand "${name}" { nativeBuildInputs = [ winePackage ]; } ''
       export WINEPREFIX="$TEMPDIR/wineprefix"
       wineboot -u
+
+      wine "${edgeInstallerExecutable}"
+      wineserver -k
 
       cp "${installerResponse}" "$WINEPREFIX/drive_c/response.iss"
       wine "${installerExecutable}" /s /f1"C:\response.iss"

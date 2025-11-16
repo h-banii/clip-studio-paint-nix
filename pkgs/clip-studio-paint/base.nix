@@ -9,8 +9,8 @@
 
   version,
   installer,
-  winePackage ? wineWowPackages.unstable,
-  installShieldWinePackage ? wineWowPackages.minimal,
+  winePackage ? wineWowPackages.waylandFull,
+  installShieldWinePackage ? wineWowPackages.waylandFull,
   windowsVersion ? "win81",
   setupLanguage ? "english",
   ...
@@ -55,9 +55,9 @@ buildWineApplication rec {
 
   withCjk = true;
 
-  executable = ''${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe'';
+  executable = "${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe";
   extraExecutables = {
-    "clip-studio" = ''${programFiles}/CLIP STUDIO/CLIPStudio.exe'';
+    "clip-studio" = "${programFiles}/CLIP STUDIO/CLIPStudio.exe";
   };
 
   desktopItems = [
