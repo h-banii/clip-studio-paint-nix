@@ -30,31 +30,43 @@ buildWineApplication rec {
     "clip-studio" = ''${programFiles}/CLIP STUDIO/CLIPStudio.exe'';
   };
 
-  desktopItems = [
-    (makeDesktopItem {
-      name = "clip-studio-paint";
-      exec = "${pname} %U";
-      icon = fetchurl {
-        url = "https://www.clipstudio.net/view/img/common/favicon.ico";
-        hash = "sha256-VKeb/CS3Jh/NW2/oa+lfQStJkwAf6+IKOQuuMNcYSGg=";
-      };
-      desktopName = "CLIP STUDIO PAINT";
-      startupWMClass = "clipstudiopaint.exe";
-      categories = [ "Graphics" ];
-    })
-    (makeDesktopItem rec {
-      name = "clip-studio";
-      exec = "${name} %U";
-      icon = fetchurl {
+  desktopItems =
+    let
+      clip-studio-icon = fetchurl {
         url = "https://assets.clip-studio.com/favicon.ico";
         hash = "sha256-YESOiN4bEIlheWbDg7iNhjIPUmbeRyVDTUqS+9sa+qk=";
       };
-      desktopName = "CLIP STUDIO";
-      startupWMClass = "clipstudio.exe";
-      categories = [ "Graphics" ];
-      mimeTypes = [ "x-scheme-handler/clipstudio" ];
-    })
-  ];
+    in
+    [
+      (makeDesktopItem {
+        name = "clip-studio-paint";
+        exec = "${pname} %U";
+        icon = fetchurl {
+          url = "https://www.clipstudio.net/view/img/common/favicon.ico";
+          hash = "sha256-VKeb/CS3Jh/NW2/oa+lfQStJkwAf6+IKOQuuMNcYSGg=";
+        };
+        desktopName = "CLIP STUDIO PAINT";
+        startupWMClass = "clipstudiopaint.exe";
+        categories = [ "Graphics" ];
+      })
+      (makeDesktopItem {
+        name = "clip-studio";
+        exec = "clip-studio %U";
+        icon = clip-studio-icon;
+        desktopName = "CLIP STUDIO";
+        startupWMClass = "clipstudio.exe";
+        categories = [ "Graphics" ];
+        mimeTypes = [ "x-scheme-handler/clipstudio" ];
+      })
+      (makeDesktopItem {
+        name = "clip-studio-protocol";
+        exec = "clip-studio -url %u";
+        icon = clip-studio-icon;
+        desktopName = "CLIP STUDIO";
+        mimeTypes = [ "x-scheme-handler/clipstudio" ];
+        noDisplay = true;
+      })
+    ];
 
   meta = {
     licenses = lib.licenses.unfree;
