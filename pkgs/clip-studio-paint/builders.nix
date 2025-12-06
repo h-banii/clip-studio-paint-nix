@@ -130,7 +130,7 @@ rec {
             ${buildScript}
             }
 
-            case "$1" in
+            case "''${1:-}" in
               boot|build|rebuild)
                 build
                 ;;
@@ -139,7 +139,7 @@ rec {
                   build
                 fi
 
-                case "$1" in
+                case "''${1:-}" in
                   eval)
                     shift
                     "$@"
