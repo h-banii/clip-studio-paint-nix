@@ -56,7 +56,6 @@ buildWineApplication rec {
         desktopName = "CLIP STUDIO";
         startupWMClass = "clipstudio.exe";
         categories = [ "Graphics" ];
-        mimeTypes = [ "x-scheme-handler/clipstudio" ];
       })
       (makeDesktopItem {
         name = "clip-studio-protocol";
