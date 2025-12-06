@@ -33,7 +33,7 @@ buildWineApplication rec {
   desktopItems = [
     (makeDesktopItem {
       name = "clip-studio-paint";
-      exec = pname;
+      exec = "${pname} %U";
       icon = fetchurl {
         url = "https://www.clipstudio.net/view/img/common/favicon.ico";
         hash = "sha256-VKeb/CS3Jh/NW2/oa+lfQStJkwAf6+IKOQuuMNcYSGg=";
@@ -44,7 +44,7 @@ buildWineApplication rec {
     })
     (makeDesktopItem rec {
       name = "clip-studio";
-      exec = name;
+      exec = "${name} %U";
       icon = fetchurl {
         url = "https://assets.clip-studio.com/favicon.ico";
         hash = "sha256-YESOiN4bEIlheWbDg7iNhjIPUmbeRyVDTUqS+9sa+qk=";
@@ -52,6 +52,7 @@ buildWineApplication rec {
       desktopName = "CLIP STUDIO";
       startupWMClass = "clipstudio.exe";
       categories = [ "Graphics" ];
+      mimeTypes = [ "x-scheme-handler/clipstudio" ];
     })
   ];
 
