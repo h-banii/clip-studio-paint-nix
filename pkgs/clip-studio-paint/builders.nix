@@ -126,13 +126,11 @@ rec {
               printf '\e[1;35m%s: \e[0m%s\n' "$var" "''${!var:-""}"
             done
 
-            COMMAND="''${1:-${command}}"
-
             build() {
             ${buildScript}
             }
 
-            case "$COMMAND" in
+            case "$1" in
               boot|build|rebuild)
                 build
                 ;;
@@ -140,7 +138,18 @@ rec {
                 if [ ! -d "$WINEPREFIX" ]; then
                   build
                 fi
-                eval "$COMMAND"
+
+                case "$1" in
+                  eval)
+                    shift
+                    "$@"
+                    ;;
+                  *)
+                    # This is useful for repassing URIs to the executable
+                    # (like "clipstudio://assets..." to download an asset)
+                    ${command} "$@"
+                    ;;
+                esac
                 ;;
             esac
 
