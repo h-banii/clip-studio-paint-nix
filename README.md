@@ -37,7 +37,32 @@ cp -r ~/.nix-csp-wine/clip-studio-paint-v{1,2}
 > cp -r \
 >   ~/.nix-csp-wine/clip-studio-paint-v1 \
 >   ~/.nix-csp-wine/clip-studio-paint-v2
-> ``` 
+> ```
+
+## Clip Studio ASSETS
+
+### v1, v2
+
+Just use the browser: https://assets.clip-studio.com/en-us
+
+> [!NOTE]
+> the browser will try to open an uri with a custom protocol
+> `clipstudio://assets...`
+>
+> The desktop entry `clip-studio-protocol.desktop` should be enough for it to
+> know to open that uri on clip studio. Tested only on firefox.
+
+### v4, 3
+
+- "Evergreen Standalone Installer": https://developer.microsoft.com/en-us/Microsoft-edge/webview2
+- Use winecfg to run `msedgewebview2.exe` with windows7 compatibility (I don't
+think this can't be done through command line alone unless we make 2
+wineprefixes...)
+- clip studio seems to run fine on win10, but csp needs win81.
+- it seems to use d3d11, so dxvk could be useful.
+
+(I'm going to write those steps in nix at some point, but for now it stays here
+as a reminder)
 
 ## Fine-grained transfer
 
