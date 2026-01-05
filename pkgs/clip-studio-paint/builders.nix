@@ -13,6 +13,7 @@ rec {
   writeWineScript =
     {
       winePackage,
+      winetricksPackage,
       wineprefix,
       use32Bit,
       text,
@@ -32,7 +33,11 @@ rec {
         }
         // derivationArgs;
 
-        runtimeInputs = [ winePackage ] ++ runtimeInputs;
+        runtimeInputs = [
+          winePackage
+          winetricksPackage
+        ]
+        ++ runtimeInputs;
 
         runtimeEnv = {
           inherit WINEARCH;
@@ -46,6 +51,7 @@ rec {
       }
       // (builtins.removeAttrs args [
         "winePackage"
+        "winetricksPackage"
         "wineprefix"
         "use32Bit"
         "text"
@@ -117,6 +123,7 @@ rec {
           inherit
             name
             winePackage
+            winetricksPackage
             wineprefix
             use32Bit
             ;
