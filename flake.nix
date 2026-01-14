@@ -1,14 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-program-files.url = "github:NixOS/nixpkgs/25.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/25.05";
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      nixpkgs-program-files,
+      nixpkgs-stable,
       systems,
       ...
     }:
@@ -16,15 +16,18 @@
       inherit (nixpkgs) lib;
       forAllSystems = lib.genAttrs (import systems);
       pkgsFor = forAllSystems (system: nixpkgs.legacyPackages.${system});
-      programFilesPkgsFor = forAllSystems (system: nixpkgs-program-files.legacyPackages.${system});
+      programFilesPkgsFor = forAllSystems (system: nixpkgs-stable.legacyPackages.${system});
     in
     {
       packages = forAllSystems (
         system:
         let
           pkgs = pkgsFor.${system};
+          stablePkgs = programFilesPkgsFor.${system};
+
+          webview2 = stablePkgs.callPackage ./pkgs/webview2 { };
           csp = pkgs.callPackage ./pkgs/clip-studio-paint {
-            programFilesCallPackage = programFilesPkgsFor.${system}.callPackage;
+            programFilesCallPackage = stablePkgs.callPackage;
           };
         in
         {
@@ -35,6 +38,7 @@
             clip-studio-paint-v3
             clip-studio-paint-v4
             ;
+          inherit webview2;
         }
       );
 
