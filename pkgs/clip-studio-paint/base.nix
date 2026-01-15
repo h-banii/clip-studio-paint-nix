@@ -75,6 +75,14 @@ buildWineApplication rec {
         mimeTypes = [ "x-scheme-handler/clipstudiopaint" ];
         noDisplay = true;
       })
+      (makeDesktopItem {
+        name = "clip-studio-format-file";
+        exec = "clip-studio-paint %f";
+        icon = clip-studio-paint-icon;
+        desktopName = "CLIP STUDIO FORMAT File";
+        mimeTypes = [ "application/x-wine-extension-clip" ];
+        noDisplay = true;
+      })
     ];
 
   meta = {
