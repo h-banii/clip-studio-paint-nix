@@ -107,7 +107,7 @@ rec {
           buildScript =
             let
               tricks = [ ] ++ lib.optional withCjk "cjkfonts" ++ extraTricks;
-              tricksString = lib.lists.foldl (elm: acc: acc + toString (elm)) "" tricks;
+              tricksString = builtins.concatStringsSep " " tricks;
             in
             ''
               mkdir -p "$WINEPREFIX"

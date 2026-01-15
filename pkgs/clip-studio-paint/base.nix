@@ -11,6 +11,8 @@
   winePackage ? wineWowPackages.unstable,
   buildWineApplication,
   windowsVersion ? "win81",
+
+  extraTricks ? [ ],
   ...
 }:
 buildWineApplication rec {
@@ -19,6 +21,7 @@ buildWineApplication rec {
     version
     winePackage
     windowsVersion
+    extraTricks
     ;
 
   wineprefix = "$HOME/.nix-csp-wine/${pname}-v${lib.versions.major version}";

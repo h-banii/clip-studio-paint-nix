@@ -25,9 +25,11 @@
           pkgs = pkgsFor.${system};
           stablePkgs = programFilesPkgsFor.${system};
 
-          webview2 = stablePkgs.callPackage ./pkgs/webview2 { };
+          webview2-verb = stablePkgs.callPackage ./pkgs/webview2-verb { };
+
           csp = pkgs.callPackage ./pkgs/clip-studio-paint {
             programFilesCallPackage = stablePkgs.callPackage;
+            inherit webview2-verb;
           };
         in
         {
@@ -38,7 +40,7 @@
             clip-studio-paint-v3
             clip-studio-paint-v4
             ;
-          inherit webview2;
+          inherit webview2-verb;
         }
       );
 

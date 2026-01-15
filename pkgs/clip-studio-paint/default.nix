@@ -1,6 +1,8 @@
 {
+  lib,
   callPackage,
   programFilesCallPackage ? callPackage,
+  webview2-verb,
 }:
 let
   builders = callPackage ./builders.nix { };
@@ -11,6 +13,7 @@ rec {
       pname ? "clip-studio-paint",
       version,
       installerHash,
+      withWebview2 ? false,
       ...
     }:
     let
@@ -29,7 +32,14 @@ rec {
         // builders
       );
     in
-    callPackage ./base.nix ({ inherit pname version programFiles; } // builders);
+    callPackage ./base.nix (
+      {
+        inherit pname version programFiles;
+        extraTricks = lib.optional withWebview2 "${webview2-verb}/webview2.verb";
+        windowsVersion = if withWebview2 then "win7" else "win81";
+      }
+      // builders
+    );
 
   clip-studio-paint-v1 = buildClipStudioPaint {
     version = "1.13.2";
@@ -44,10 +54,12 @@ rec {
   clip-studio-paint-v3 = buildClipStudioPaint {
     version = "3.0.4";
     installerHash = "sha256-Es3QcpTReNi2RgVP0PtInLU/OFAl6beLs2jultKcV+4=";
+    withWebview2 = true;
   };
 
   clip-studio-paint-v4 = buildClipStudioPaint {
     version = "4.0.3";
     installerHash = "sha256-swSj3j6xO56LQPhm5QqONMZ5i3m45McPx7yeDCZl6NA=";
+    withWebview2 = true;
   };
 }

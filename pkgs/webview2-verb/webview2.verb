@@ -1,0 +1,19 @@
+w_metadata webview2 apps \
+    title="WebView2" \
+    publisher="Microsoft"
+
+load_webview2()
+{
+    w_try_mkdir "${W_DRIVE_C}/webview2"
+    w_try cp -R "@webview2@"/* "${W_DRIVE_C}/webview2"
+    w_try chmod u+w -R "${W_DRIVE_C}/webview2"
+
+    cat > "${W_TMP}"/set-webview2-path.reg <<_EOF_
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\WebView2\BrowserExecutableFolder]
+"*"="C:\\\\webview2"
+
+_EOF_
+    w_try_regedit "${W_TMP}"/set-webview2-path.reg
+}
