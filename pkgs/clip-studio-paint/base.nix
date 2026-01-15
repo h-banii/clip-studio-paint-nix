@@ -37,15 +37,16 @@ buildWineApplication rec {
         url = "https://assets.clip-studio.com/favicon.ico";
         hash = "sha256-YESOiN4bEIlheWbDg7iNhjIPUmbeRyVDTUqS+9sa+qk=";
       };
+      clip-studio-paint-icon = fetchurl {
+        url = "https://www.clipstudio.net/view/img/common/favicon.ico";
+        hash = "sha256-VKeb/CS3Jh/NW2/oa+lfQStJkwAf6+IKOQuuMNcYSGg=";
+      };
     in
     [
       (makeDesktopItem {
         name = "clip-studio-paint";
         exec = "${pname} %U";
-        icon = fetchurl {
-          url = "https://www.clipstudio.net/view/img/common/favicon.ico";
-          hash = "sha256-VKeb/CS3Jh/NW2/oa+lfQStJkwAf6+IKOQuuMNcYSGg=";
-        };
+        icon = clip-studio-paint-icon;
         desktopName = "CLIP STUDIO PAINT";
         startupWMClass = "clipstudiopaint.exe";
         categories = [ "Graphics" ];
@@ -64,6 +65,14 @@ buildWineApplication rec {
         icon = clip-studio-icon;
         desktopName = "CLIP STUDIO";
         mimeTypes = [ "x-scheme-handler/clipstudio" ];
+        noDisplay = true;
+      })
+      (makeDesktopItem {
+        name = "clip-studio-paint-protocol";
+        exec = "clip-studio-paint -url %u";
+        icon = clip-studio-paint-icon;
+        desktopName = "CLIP STUDIO PAINT";
+        mimeTypes = [ "x-scheme-handler/clipstudiopaint" ];
         noDisplay = true;
       })
     ];
