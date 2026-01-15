@@ -85,8 +85,8 @@ To transfer your license from an existing installation, you need to do 2 things:
 
 1. Copy your user registry `user.reg` to the new prefix
 
-2. Copy this file
-- `drive_c/users/$USER/AppData/Roaming/CELSYS_EN/CLIPStudioPaint/1.0.0/Boot/PreferenceSetting.pff`
+2. Copy this folder
+- `drive_c/users/$USER/AppData/Roaming/CELSYS_EN`
 
 > [!NOTE]
 > Technically, you don't need to copy the whole `user.reg` file, just a certain
