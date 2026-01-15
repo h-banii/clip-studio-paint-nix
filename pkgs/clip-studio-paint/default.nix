@@ -2,11 +2,20 @@
   lib,
   callPackage,
   programFilesCallPackage ? callPackage,
-  webview2-verb,
+  linkFarm,
 }:
 let
   builders = callPackage ./builders.nix { };
-  webview2 = "${webview2-verb}/webview2.verb";
+
+  # winetricks requires the basename to be "trick-name.verb"
+  webview2 = "${
+    linkFarm "webview2-trick" [
+      {
+        name = "webview2.verb";
+        path = ./webview2.verb;
+      }
+    ]
+  }/webview2.verb";
 in
 rec {
   buildClipStudioPaint =
@@ -64,6 +73,7 @@ rec {
     installerHash = "sha256-Es3QcpTReNi2RgVP0PtInLU/OFAl6beLs2jultKcV+4=";
     tricks = [
       webview2
+      "corefonts"
       "dxvk"
     ];
     windowsVersion = "win7";
@@ -74,6 +84,7 @@ rec {
     installerHash = "sha256-swSj3j6xO56LQPhm5QqONMZ5i3m45McPx7yeDCZl6NA=";
     tricks = [
       webview2
+      "corefonts"
       "dxvk"
     ];
     windowsVersion = "win7";
