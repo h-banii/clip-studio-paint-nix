@@ -8,14 +8,18 @@ let
   builders = callPackage ./builders.nix { };
 
   # winetricks requires the basename to be "trick-name.verb"
-  webview2 = "${
-    linkFarm "webview2-trick" [
-      {
-        name = "webview2.verb";
-        path = ./webview2.verb;
-      }
-    ]
-  }/webview2.verb";
+  tricks = linkFarm "tricks" [
+    {
+      name = "webview2.verb";
+      path = ./tricks/webview2.verb;
+    }
+    {
+      name = "lightcjk.verb";
+      path = ./tricks/lightcjk.verb;
+    }
+  ];
+
+  getTrick = name: "${tricks}/${name}.verb";
 in
 rec {
   buildClipStudioPaint =
@@ -72,8 +76,8 @@ rec {
     version = "3.0.4";
     installerHash = "sha256-Es3QcpTReNi2RgVP0PtInLU/OFAl6beLs2jultKcV+4=";
     tricks = [
-      webview2
-      "corefonts"
+      (getTrick "webview2")
+      (getTrick "lightcjk")
       "dxvk"
     ];
     windowsVersion = "win7";
@@ -83,8 +87,8 @@ rec {
     version = "4.0.3";
     installerHash = "sha256-swSj3j6xO56LQPhm5QqONMZ5i3m45McPx7yeDCZl6NA=";
     tricks = [
-      webview2
-      "corefonts"
+      (getTrick "webview2")
+      (getTrick "lightcjk")
       "dxvk"
     ];
     windowsVersion = "win7";

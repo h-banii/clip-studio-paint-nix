@@ -1,0 +1,12 @@
+w_metadata lightcjk fonts \
+    title="Creates aliases for some fonts using Source Han Sans fonts" \
+    publisher="Adobe" \
+    year="2019"
+
+load_lightcjk()
+{
+    w_call sourcehansans
+
+    w_register_font_replacement "Arial" "Source Han Sans"
+    w_register_font_replacement "Batang" "Source Han Sans K"
+}
