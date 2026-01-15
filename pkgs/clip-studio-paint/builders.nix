@@ -91,8 +91,7 @@ rec {
       winePackage ? wineWowPackages.staging,
       winetricksPackage ? winetricks,
 
-      withCjk ? false,
-      extraTricks ? [ ],
+      tricks ? [ ],
 
       use32Bit ? false,
       windowsVersion ? "win10",
@@ -106,7 +105,6 @@ rec {
         let
           buildScript =
             let
-              tricks = [ ] ++ lib.optional withCjk "cjkfonts" ++ extraTricks;
               tricksString = builtins.concatStringsSep " " tricks;
             in
             ''

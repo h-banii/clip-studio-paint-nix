@@ -12,7 +12,7 @@
   buildWineApplication,
   windowsVersion ? "win81",
 
-  extraTricks ? [ ],
+  tricks ? [ ],
   ...
 }:
 buildWineApplication rec {
@@ -21,12 +21,10 @@ buildWineApplication rec {
     version
     winePackage
     windowsVersion
-    extraTricks
+    tricks
     ;
 
   wineprefix = "$HOME/.nix-csp-wine/${pname}-v${lib.versions.major version}";
-
-  withCjk = true;
 
   executable = ''${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe'';
   extraExecutables = {
