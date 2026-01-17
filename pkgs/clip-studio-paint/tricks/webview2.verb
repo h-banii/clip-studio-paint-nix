@@ -19,5 +19,7 @@ REGEDIT4
 _EOF_
 
     w_try_regedit "${W_TMP}"/set-webview2-path.reg
+
+    w_set_winver win7
 }
 
