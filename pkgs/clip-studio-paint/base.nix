@@ -13,6 +13,7 @@
   windowsVersion ? "win81",
 
   tricks ? [ ],
+  derivationArgs ? { },
   ...
 }:
 buildWineApplication rec {
@@ -22,6 +23,7 @@ buildWineApplication rec {
     winePackage
     windowsVersion
     tricks
+    derivationArgs
     ;
 
   wineprefix = "$HOME/.nix-csp-wine/${pname}-v${lib.versions.major version}";
