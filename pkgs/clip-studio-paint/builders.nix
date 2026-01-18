@@ -68,15 +68,21 @@ rec {
       installerResponse, # .iss file
       programFiles,
     }:
-    runCommand "${name}" { nativeBuildInputs = [ winePackage ]; } ''
-      export WINEPREFIX="$TEMPDIR/wineprefix"
-      wineboot -u
+    runCommand "${name}"
+      {
+        nativeBuildInputs = [ winePackage ];
+      }
+      ''
+        export WINEPREFIX="$TEMPDIR/wineprefix"
 
-      cp "${installerResponse}" "$WINEPREFIX/drive_c/response.iss"
-      wine "${installerExecutable}" /s /f1"C:\response.iss"
+        wineboot
 
-      mv "$WINEPREFIX/drive_c/${programFiles}" $out
-    '';
+        cp "${installerExecutable}" "$WINEPREFIX/drive_c/setup.exe"
+        cp "${installerResponse}" "$WINEPREFIX/drive_c/response.iss"
+        wine "C:\setup.exe" /s /f1"C:\response.iss"
+
+        mv "$WINEPREFIX/drive_c/${programFiles}" $out
+      '';
 
   buildWineApplication =
     {
