@@ -15,11 +15,11 @@ writeText "clip-studio-paint-iss" ''
   OverwrittenReadOnly=NoToAll
   [${productGuid}-DlgOrder]
   Dlg0=${productGuid}-SdWelcome-0
-  Count=6
+  Count=5
   Dlg1=${productGuid}-LicenseDialog-0
-  Dlg2=${productGuid}-SdAskDestPath2-1
-  Dlg4=${productGuid}-SdStartCopy2-0
-  Dlg5=${productGuid}-SdFinish-0
+  Dlg2=${productGuid}-SdAskDestPath2-0
+  Dlg3=${productGuid}-SdStartCopy2-0
+  Dlg4=${productGuid}-SdFinish-0
   [${productGuid}-SdWelcome-0]
   Result=1
   [${productGuid}-LicenseDialog-0]
