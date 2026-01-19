@@ -28,9 +28,9 @@ buildWineApplication rec {
 
   wineprefix = "$HOME/.nix-csp-wine/${pname}-v${lib.versions.major version}";
 
-  executable = ''${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe'';
+  executable = "${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe";
   extraExecutables = {
-    "clip-studio" = ''${programFiles}/CLIP STUDIO/CLIPStudio.exe'';
+    "clip-studio" = "${programFiles}/CLIP STUDIO/CLIPStudio.exe";
   };
 
   desktopItems =
@@ -49,7 +49,7 @@ buildWineApplication rec {
         name = "clip-studio-paint";
         exec = "${pname} %U";
         icon = clip-studio-paint-icon;
-        desktopName = "CLIP STUDIO PAINT";
+        desktopName = "CLIP STUDIO PAINT ${version}";
         startupWMClass = "clipstudiopaint.exe";
         categories = [ "Graphics" ];
       })
@@ -57,7 +57,7 @@ buildWineApplication rec {
         name = "clip-studio";
         exec = "clip-studio %U";
         icon = clip-studio-icon;
-        desktopName = "CLIP STUDIO";
+        desktopName = "CLIP STUDIO ${version}";
         startupWMClass = "clipstudio.exe";
         categories = [ "Graphics" ];
       })
@@ -65,7 +65,7 @@ buildWineApplication rec {
         name = "clip-studio-protocol";
         exec = "clip-studio -url %u";
         icon = clip-studio-icon;
-        desktopName = "CLIP STUDIO";
+        desktopName = "CLIP STUDIO ${version}";
         mimeTypes = [ "x-scheme-handler/clipstudio" ];
         noDisplay = true;
       })
@@ -73,7 +73,7 @@ buildWineApplication rec {
         name = "clip-studio-paint-protocol";
         exec = "clip-studio-paint -url %u";
         icon = clip-studio-paint-icon;
-        desktopName = "CLIP STUDIO PAINT";
+        desktopName = "CLIP STUDIO PAINT ${version}";
         mimeTypes = [ "x-scheme-handler/clipstudiopaint" ];
         noDisplay = true;
       })
@@ -81,7 +81,7 @@ buildWineApplication rec {
         name = "clip-studio-format-file";
         exec = "clip-studio-paint %f";
         icon = clip-studio-paint-icon;
-        desktopName = "CLIP STUDIO FORMAT File";
+        desktopName = "CLIP STUDIO FORMAT File ${version}";
         mimeTypes = [ "application/x-wine-extension-clip" ];
         noDisplay = true;
       })
