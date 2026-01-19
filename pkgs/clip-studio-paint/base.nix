@@ -16,6 +16,14 @@
   derivationArgs ? { },
   ...
 }:
+let
+  majorVersion =
+    with lib.versions;
+    if (minor version) == "0" then
+      major version
+    else
+      builtins.toString ((lib.strings.toInt (major version)) + 1);
+in
 buildWineApplication rec {
   inherit
     pname
@@ -26,7 +34,7 @@ buildWineApplication rec {
     derivationArgs
     ;
 
-  wineprefix = "$HOME/.nix-csp-wine/${pname}-v${lib.versions.major version}";
+  wineprefix = "$HOME/.nix-csp-wine/${pname}-v${majorVersion}";
 
   executable = "${programFiles}/CLIP STUDIO PAINT/CLIPStudioPaint.exe";
   extraExecutables = {
