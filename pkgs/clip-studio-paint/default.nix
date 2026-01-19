@@ -109,4 +109,18 @@ rec {
     ];
     windowsVersion = "win7";
   };
+
+  clip-studio-paint-v5 = buildClipStudioPaint {
+    version = "4.2.5";
+    installerHash = "sha256-/JVkt+s4Kz/SwvpGP+tz9Ou4u9piQYvz9NlC5oVPN38=";
+    rawInstallerHash = "fc9564b7eb382b3fd2c2fa463feb73f4ebb8bbda62418bf3f4d942e6854f377f";
+    tricks = [
+      "dxvk"
+    ];
+    customTricks = [
+      "webview2"
+      "lightcjk"
+    ];
+    windowsVersion = "win7";
+  };
 }
