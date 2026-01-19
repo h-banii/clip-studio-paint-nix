@@ -56,7 +56,10 @@ Just use the browser: https://assets.clip-studio.com/en-us
 > The desktop entry `clip-studio-protocol.desktop` should be enough for it to
 > know to open that uri on clip studio. Tested only on firefox.
 
-### v4, 3
+Or use a newer version of **Clip Studio**. See
+[#mix-clip-studio-and-clip-studio-paint-versions](#mix-clip-studio-and-clip-studio-paint-versions).
+
+### v4, v3
 
 The asset store in Clip Studio should work out of the box. If it doesn't, make
 sure the wineprefix has webview2 installed and the Winodws version is set to
