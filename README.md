@@ -12,6 +12,7 @@ Nix flake to package clip-studio-paint-v{1..4}
 
 The package installs 2 scripts and 2 desktop entries, one for **Clip Studio**
 and the other for **Clip Studio Paint**:
+
 - `clip-studio-paint`
 - `clip-studio`
 
@@ -33,6 +34,7 @@ cp -r ~/.nix-csp-wine/clip-studio-paint-v{1,2}
 
 > [!NOTE]
 > The command above is equivalent to
+>
 > ```sh
 > cp -r \
 >   ~/.nix-csp-wine/clip-studio-paint-v1 \
@@ -56,8 +58,8 @@ Just use the browser: https://assets.clip-studio.com/en-us
 
 - "Evergreen Standalone Installer": https://developer.microsoft.com/en-us/Microsoft-edge/webview2
 - Use winecfg to run `msedgewebview2.exe` with windows7 compatibility (I don't
-think this can't be done through command line alone unless we make 2
-wineprefixes...)
+  think this can't be done through command line alone unless we make 2
+  wineprefixes...)
 - clip studio seems to run fine on win10, but csp needs win81.
 - it seems to use d3d11, so dxvk could be useful.
 
@@ -74,6 +76,7 @@ required for it to work
 
 In order to import your brushes and settings from a previous wine prefix you
 need to copy this folder
+
 - `drive_c/users/$USER/AppData/Roaming/CELSYSUserData`
 
 ### Perpetual license
@@ -86,6 +89,7 @@ To transfer your license from an existing installation, you need to do 2 things:
 1. Copy your user registry `user.reg` to the new prefix
 
 2. Copy this folder
+
 - `drive_c/users/$USER/AppData/Roaming/CELSYS_EN`
 
 > [!NOTE]
@@ -94,3 +98,44 @@ To transfer your license from an existing installation, you need to do 2 things:
 
 > [!NOTE]
 > You could also activate your license the "normal" way through the menu.
+
+## Custom wine tricks
+
+Instead of installing Clip Studio Paint with nix, you can use a custom
+winetrick.
+
+```sh
+nix build github:h-banii/clip-studio-paint-nix#clip-studio-paint-v4.passthru.tricks
+```
+
+```sh
+result
+├── csp.verb
+├── lightcjk.verb
+└── webview2.verb
+```
+
+```sh
+winetricks ./result/*.verb
+```
+
+Winetricks caches csp's installer under
+`~/.cache/winetricks/csp/CSP_${VERSION}w_setup.exe`
+
+## Mix Clip Studio and Clip Studio Paint versions
+
+This flake also exposes `clip-studio-paint-vx-plus` packages that mixes the
+clip studio paint version `x` with the latest clip studio.
+
+However, this uses 2 wine prefixes, so you'll need to symlink the user data
+folder in order to share assets between those prefixes:
+
+```sh
+# This example assumes you're using clip-studio-paint-v1-plus
+# and the latest clip studio version is 5
+rm -rf ~/.nix-csp-wine/clip-studio-paint-v5/drive_c/users/hbanii/AppData/Roaming/CELSYSUserData
+ln -s ~/.nix-csp-wine/clip-studio-paint-v{1,5}/drive_c/users/hbanii/AppData/Roaming/CELSYSUserData
+```
+
+That allows you to download and manage assets using the latest clip studio
+while still using an older clip studio paint version.
