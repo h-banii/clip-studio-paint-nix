@@ -58,15 +58,12 @@ Just use the browser: https://assets.clip-studio.com/en-us
 
 ### v4, 3
 
-- "Evergreen Standalone Installer": https://developer.microsoft.com/en-us/Microsoft-edge/webview2
-- Use winecfg to run `msedgewebview2.exe` with windows7 compatibility (I don't
-  think this can't be done through command line alone unless we make 2
-  wineprefixes...)
-- clip studio seems to run fine on win10, but csp needs win81.
-- it seems to use d3d11, so dxvk could be useful.
+The asset store in Clip Studio should work out of the box. If it doesn't, make
+sure the wineprefix has webview2 installed and the Winodws version is set to
+`win7`.
 
-(I'm going to write those steps in nix at some point, but for now it stays here
-as a reminder)
+This flake also provides custom winetricks to install webview2 manually, see
+[#custom-wine-tricks](#custom-wine-tricks).
 
 ## Fine-grained transfer
 
@@ -88,15 +85,9 @@ need to copy this folder
 
 To transfer your license from an existing installation, you need to do 2 things:
 
-1. Copy your user registry `user.reg` to the new prefix
+1. Copy `[Software\\CELSYS_EN\\CLIP STUDIO PAINT]` from `user.reg`
 
-2. Copy this folder
-
-- `drive_c/users/$USER/AppData/Roaming/CELSYS_EN`
-
-> [!NOTE]
-> Technically, you don't need to copy the whole `user.reg` file, just a certain
-> key.
+2. Copy `drive_c/users/$USER/AppData/Roaming/CELSYS_EN`
 
 > [!NOTE]
 > You could also activate your license the "normal" way through the menu.
