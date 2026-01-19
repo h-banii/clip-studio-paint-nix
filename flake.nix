@@ -28,6 +28,24 @@
           csp = pkgs.callPackage ./pkgs/clip-studio-paint {
             programFilesCallPackage = stablePkgs.callPackage;
           };
+
+          mixVersions =
+            let
+              symlink = input: path: {
+                name = path;
+                path = "${input}/${path}";
+              };
+            in
+            version: cs: csp:
+            pkgs.linkFarm "clip-studio-paint-mix-${version}" [
+              (symlink cs "bin/clip-studio")
+              (symlink cs "share/applications/clip-studio.desktop")
+              (symlink cs "share/applications/clip-studio-protocol.desktop")
+              (symlink csp "bin/clip-studio-paint")
+              (symlink csp "share/applications/clip-studio-paint.desktop")
+              (symlink csp "share/applications/clip-studio-paint-protocol.desktop")
+              (symlink csp "share/applications/clip-studio-paint-format-file.desktop")
+            ];
         in
         {
           default = self.packages.${system}.clip-studio-paint-v1;
@@ -38,6 +56,9 @@
             clip-studio-paint-v4
             clip-studio-paint-v5
             ;
+          clip-studio-paint-latest = self.packages.${system}.clip-studio-paint-v5;
+          clip-studio-paint-v1-plus = with csp; mixVersions clip-studio-paint-latest clip-studio-paint-v1;
+          clip-studio-paint-v2-plus = with csp; mixVersions clip-studio-paint-latest clip-studio-paint-v2;
         }
       );
 
