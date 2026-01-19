@@ -8,7 +8,9 @@ Nix flake to package clip-studio-paint-v{1..4}
 - `clip-studio-paint-v2`: 2.0.6
 - `clip-studio-paint-v3`: 3.0.4
 - `clip-studio-paint-v4`: 4.0.3
+- `clip-studio-paint-v5`: 4.2.5
 - `default` -> `clip-studio-paint-v1`
+- `clip-studio-paint-latest` -> `clip-studio-paint-v5`
 
 The package installs 2 scripts and 2 desktop entries, one for **Clip Studio**
 and the other for **Clip Studio Paint**:
