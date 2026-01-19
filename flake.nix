@@ -36,8 +36,8 @@
                 path = "${input}/${path}";
               };
             in
-            version: cs: csp:
-            pkgs.linkFarm "clip-studio-paint-mix-${version}" [
+            cs: csp:
+            pkgs.linkFarm "clip-studio-paint-mix-${cs.version}-${csp.version}" [
               (symlink cs "bin/clip-studio")
               (symlink cs "share/applications/clip-studio.desktop")
               (symlink cs "share/applications/clip-studio-protocol.desktop")
@@ -47,8 +47,8 @@
               (symlink csp "share/applications/clip-studio-paint-format-file.desktop")
             ];
         in
-        {
-          default = self.packages.${system}.clip-studio-paint-v1;
+        rec {
+          default = clip-studio-paint-v1;
           inherit (csp)
             clip-studio-paint-v1
             clip-studio-paint-v2
@@ -57,8 +57,8 @@
             clip-studio-paint-v5
             ;
           clip-studio-paint-latest = self.packages.${system}.clip-studio-paint-v5;
-          clip-studio-paint-v1-plus = with csp; mixVersions clip-studio-paint-latest clip-studio-paint-v1;
-          clip-studio-paint-v2-plus = with csp; mixVersions clip-studio-paint-latest clip-studio-paint-v2;
+          clip-studio-paint-v1-plus = mixVersions clip-studio-paint-latest csp.clip-studio-paint-v1;
+          clip-studio-paint-v2-plus = mixVersions clip-studio-paint-latest csp.clip-studio-paint-v2;
         }
       );
 

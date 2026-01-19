@@ -200,7 +200,7 @@ rec {
           );
     in
     symlinkJoin {
-      name = "${pname}-${version}";
+      inherit pname version;
 
       paths = runners ++ lib.optional (desktopItems != [ ]) desktopEntries;
 
