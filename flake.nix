@@ -44,7 +44,7 @@
               (symlink csp "bin/clip-studio-paint")
               (symlink csp "share/applications/clip-studio-paint.desktop")
               (symlink csp "share/applications/clip-studio-paint-protocol.desktop")
-              (symlink csp "share/applications/clip-studio-paint-format-file.desktop")
+              (symlink csp "share/applications/clip-studio-format-file.desktop")
             ];
         in
         rec {
