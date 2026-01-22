@@ -19,7 +19,7 @@
 let
   majorVersion =
     with lib.versions;
-    if (minor version) == "0" then
+    if (minor version) == "0" || (major version) == "1" then
       major version
     else
       builtins.toString ((lib.strings.toInt (major version)) + 1);
