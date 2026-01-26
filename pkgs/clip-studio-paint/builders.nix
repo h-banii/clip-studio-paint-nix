@@ -164,6 +164,7 @@ rec {
                 ;;
             esac
 
+            wineserver -w
             wineserver -k
           '';
         };
