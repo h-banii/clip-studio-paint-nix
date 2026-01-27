@@ -133,17 +133,31 @@ rec {
             ;
 
           text = ''
-            for var in WINEPREFIX WINEARCH; do
-              printf '\e[1;35m%s: \e[0m%s\n' "$var" "''${!var:-""}"
-            done
+            info() {
+              printf '\e[1;35m%s: \e[0m%s\n' "$1" "$2"
+            }
+
+            close() {
+              info "wineserver" "Killing wineserver..."
+              wineserver -k
+            }
+
+            trap close INT
 
             build() {
             ${buildScript}
             }
 
+            for var in WINEPREFIX WINEARCH; do
+              info "$var" "''${!var:-""}"
+            done
+
             case "''${1:-}" in
               boot|build|rebuild)
                 build
+                ;;
+              kill)
+                close
                 ;;
               *)
                 if [ ! -d "$WINEPREFIX" ]; then
@@ -164,8 +178,8 @@ rec {
                 ;;
             esac
 
+            info "wineserver" "Waiting for wineserver to terminate..."
             wineserver -w
-            wineserver -k
           '';
         };
 
