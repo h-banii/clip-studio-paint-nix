@@ -93,7 +93,6 @@ rec {
       "webview2"
       "lightcjk"
     ];
-    windowsVersion = "win7";
   };
 
   clip-studio-paint-v4 = buildClipStudioPaint {
@@ -107,7 +106,6 @@ rec {
       "webview2"
       "lightcjk"
     ];
-    windowsVersion = "win7";
   };
 
   clip-studio-paint-v5 = buildClipStudioPaint {
@@ -121,6 +119,5 @@ rec {
       "webview2"
       "lightcjk"
     ];
-    windowsVersion = "win7";
   };
 }
