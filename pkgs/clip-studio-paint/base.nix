@@ -6,9 +6,9 @@
   lib,
   fetchurl,
   makeDesktopItem,
-  wineWowPackages,
+  wineWow64Packages,
 
-  winePackage ? wineWowPackages.unstable,
+  winePackage ? wineWow64Packages.unstable,
   buildWineApplication,
   windowsVersion ? "win81",
 

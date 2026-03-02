@@ -5,11 +5,11 @@
   setupLanguage ? "english",
 
   fetchurl,
-  wineWowPackages,
+  wineWow64Packages,
 
   callPackage,
 
-  winePackage ? wineWowPackages.minimal,
+  winePackage ? wineWow64Packages.minimal,
   buildInstallShield,
   ...
 }:

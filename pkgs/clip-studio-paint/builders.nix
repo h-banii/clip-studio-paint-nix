@@ -5,7 +5,7 @@
   runCommand,
   writeShellApplication,
   copyDesktopItems,
-  wineWowPackages,
+  wineWow64Packages,
   winetricks,
   ...
 }:
@@ -94,7 +94,7 @@ rec {
 
       desktopItems ? [ ],
 
-      winePackage ? wineWowPackages.staging,
+      winePackage ? wineWow64Packages.staging,
       winetricksPackage ? winetricks,
 
       tricks ? [ ],
