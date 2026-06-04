@@ -40,11 +40,14 @@ rec {
       tricksPackage = linkFarm "clip-studio-paint-tricks" [
         {
           name = "csp.verb";
-          path = replaceVars ./tricks/csp.verb {
-            inherit ver version;
-            # IFD: This could be removed with a derivation to build csv.verb
-            hash = builtins.readFile hexHash;
-          };
+          path = runCommand "csp.verb" { } ''
+            CSP_HASH=$(base64 -d <<< ${hash} | xxd -p)
+
+            substitute ${./tricks/csp.verb} \
+              --replace ver ${ver} \
+              --replace version ${version}
+              --replace hash $CSP_HASH
+          '';
         }
         {
           name = "webview2.verb";
