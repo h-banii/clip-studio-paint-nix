@@ -8,7 +8,7 @@ Nix flake to package clip-studio-paint-v{1..4}
 - `clip-studio-paint-v2`: 2.0.6
 - `clip-studio-paint-v3`: 3.0.8
 - `clip-studio-paint-v4`: 4.0.10
-- `clip-studio-paint-v5`: 4.2.5
+- `clip-studio-paint-v5`: 5.0.4
 - `default` -> `clip-studio-paint-v1`
 - `clip-studio-paint-latest` -> `clip-studio-paint-v5`
 

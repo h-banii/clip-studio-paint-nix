@@ -94,8 +94,8 @@ rec {
   };
 
   clip-studio-paint-v5 = buildClipStudioPaint {
-    version = "4.2.5";
-    hash = "sha256-/JVkt+s4Kz/SwvpGP+tz9Ou4u9piQYvz9NlC5oVPN38=";
+    version = "5.0.4";
+    hash = "sha256-J3Semf35JjSmIazkhYBetTABmFr8KnOtIFdq57j3w+Y=";
     tricks = [
       "dxvk"
     ];
