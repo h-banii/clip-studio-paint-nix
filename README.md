@@ -23,6 +23,35 @@ build. The wine prefixes are only used to store user settings, brushes, etc, so
 you can safely delete/recreate them without affecting clip studio paint's
 installation.
 
+## Inputs
+
+You can use this as is:
+
+```nix
+inputs.clip-studio-paint.url = "github:h-banii/clip-studio-paint-nix";
+```
+
+Or pin nixpkgs to follow your system's:
+
+```nix
+inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/26.05";
+
+    clip-studio-paint = {
+        url = "github:h-banii/clip-studio-paint-nix";
+
+        # This is used to build the main script that runs csp on wine.
+        inputs.nixpkgs.follows = "nixpkgs";
+
+        # This is used to fetch the installer and "unpack" it to the nix store.
+        #
+        # Don't change this often, otherwise it'll try to redownload.
+        inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    };
+};
+```
+
 ## Transfering settings between prefixes
 
 Wine prefixes are created during the first run for each user at
