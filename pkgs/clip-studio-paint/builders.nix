@@ -64,8 +64,8 @@ rec {
     {
       name,
       winePackage,
-      installerExecutable, # setup.exe file
-      installerResponse, # .iss file
+      src, # executable file
+      iss, # iss file
       programFiles,
     }:
     runCommand "${name}"
@@ -77,8 +77,8 @@ rec {
 
         wineboot
 
-        cp "${installerExecutable}" "$WINEPREFIX/drive_c/setup.exe"
-        cp "${installerResponse}" "$WINEPREFIX/drive_c/response.iss"
+        cp "${src}" "$WINEPREFIX/drive_c/setup.exe"
+        cp "${iss}" "$WINEPREFIX/drive_c/response.iss"
         wine "C:\setup.exe" /s /f1"C:\response.iss"
 
         mv "$WINEPREFIX/drive_c/${programFiles}" $out

@@ -18,9 +18,9 @@ buildInstallShield {
 
   inherit winePackage;
 
-  installerExecutable = fetchurl installer;
+  src = fetchurl installer;
 
-  installerResponse = callPackage ./iss.nix {
+  iss = callPackage ./iss.nix {
     inherit version;
     langCode =
       {
