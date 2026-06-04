@@ -1,15 +1,12 @@
 {
   lib,
-  callPackage,
+  pkgs,
   stablePkgs,
   linkFarm,
   replaceVars,
-
-  runCommand,
-  toybox,
 }:
 let
-  builders = callPackage ./builders.nix { };
+  builders = pkgs.callPackage ./builders.nix { };
 in
 rec {
   buildClipStudioPaint =
@@ -26,48 +23,27 @@ rec {
     let
       ver = builtins.replaceStrings [ "." ] [ "" ] version;
 
-      installer = stablePkgs.fetchurl {
-        name = "clip-studio-paint-installer-${version}";
-        url = "https://vd.clipstudio.net/clipcontent/paint/app/${ver}/CSP_${ver}w_setup.exe";
-        inherit hash;
+      tricksPackage = pkgs.callPackage ./tricks {
+        inherit version;
+        cspHash = hash;
       };
 
-      hexHash = runCommand "csp-hex-hash" {
-        buildInputs = [ toybox ];
-      } "base64 -d <<< ${hash} | xxd -p > $out";
+      programFiles =
+        with stablePkgs;
+        callPackage ./programFiles (
+          {
+            inherit pname version;
 
-      # winetricks requires the basename to be "trick-name.verb"
-      tricksPackage = linkFarm "clip-studio-paint-tricks" [
-        {
-          name = "csp.verb";
-          path = runCommand "csp.verb" { } ''
-            CSP_HASH=$(base64 -d <<< ${hash} | xxd -p)
-
-            substitute ${./tricks/csp.verb} \
-              --replace ver ${ver} \
-              --replace version ${version}
-              --replace hash $CSP_HASH
-          '';
-        }
-        {
-          name = "webview2.verb";
-          path = ./tricks/webview2.verb;
-        }
-        {
-          name = "lightcjk.verb";
-          path = ./tricks/lightcjk.verb;
-        }
-      ];
-
-      programFiles = stablePkgs.callPackage ./programFiles (
-        {
-          inherit pname version;
-          src = installer;
-        }
-        // builders
-      );
+            src = fetchurl {
+              name = "clip-studio-paint-installer-${version}";
+              url = "https://vd.clipstudio.net/clipcontent/paint/app/${ver}/CSP_${ver}w_setup.exe";
+              inherit hash;
+            };
+          }
+          // builders
+        );
     in
-    callPackage ./base.nix (
+    pkgs.callPackage ./base.nix (
       {
         inherit
           pname
