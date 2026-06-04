@@ -126,10 +126,11 @@ To transfer your license from an existing installation, you need to do 2 things:
 
 ## Custom wine tricks
 
-Instead of installing Clip Studio Paint with nix, you can use a custom
-winetrick.
+Instead of installing Clip Studio Paint with nix, you can use custom
+winetricks.
 
 ```sh
+# Build the winetricks for clip-studio-paint-v4
 nix build github:h-banii/clip-studio-paint-nix#clip-studio-paint-v4.passthru.tricks
 ```
 
