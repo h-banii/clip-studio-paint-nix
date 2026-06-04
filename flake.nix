@@ -26,7 +26,7 @@
           stablePkgs = programFilesPkgsFor.${system};
 
           csp = pkgs.callPackage ./pkgs/clip-studio-paint {
-            programFilesCallPackage = stablePkgs.callPackage;
+            inherit stablePkgs;
           };
 
           mixVersions =

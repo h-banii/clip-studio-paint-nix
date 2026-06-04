@@ -1,7 +1,7 @@
 {
   lib,
   callPackage,
-  programFilesCallPackage ? callPackage,
+  stablePkgs,
   linkFarm,
   replaceVars,
 }:
@@ -42,7 +42,7 @@ rec {
         }
       ];
 
-      programFiles = programFilesCallPackage ./programFiles.nix (
+      programFiles = stablePkgs.callPackage ./programFiles.nix (
         {
           inherit pname version;
           installer = {
