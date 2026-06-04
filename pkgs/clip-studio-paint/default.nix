@@ -45,7 +45,7 @@ rec {
       programFiles = stablePkgs.callPackage ./programFiles.nix (
         {
           inherit pname version;
-          installer = {
+          src = stablePkgs.fetchurl {
             name = "clip-studio-paint-installer-${version}";
             url = "https://vd.clipstudio.net/clipcontent/paint/app/${ver}/CSP_${ver}w_setup.exe";
             hash = installerHash;
