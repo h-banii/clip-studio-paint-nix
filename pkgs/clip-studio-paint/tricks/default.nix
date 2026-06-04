@@ -4,6 +4,7 @@
 
   linkFarm,
   runCommand,
+  toybox,
 }:
 let
   ver = builtins.replaceStrings [ "." ] [ "" ] version;
@@ -11,13 +12,14 @@ in
 linkFarm "clip-studio-paint-tricks" [
   {
     name = "csp.verb";
-    path = runCommand "csp.verb" { } ''
-      CSP_HASH=$(base64 -d <<< ${cspHash} | xxd -p)
+    path = runCommand "csp.verb" { buildInputs = [ toybox ]; } ''
+      CSP_HASH="${cspHash}"
+      CSP_HASH="$(base64 -d <<< ''${CSP_HASH#sha256-} | xxd -p -c 0)"
 
-      substitute ${./csp.verb} \
-        --replace ver ${ver} \
-        --replace version ${version}
-        --replace hash $CSP_HASH
+      substitute ${./csp.verb} $out \
+        --replace-fail @ver@ ${ver} \
+        --replace-fail @version@ ${version} \
+        --replace-fail @hash@ "$CSP_HASH"
     '';
   }
   {
