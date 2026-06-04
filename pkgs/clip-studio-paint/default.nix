@@ -42,7 +42,7 @@ rec {
         }
       ];
 
-      programFiles = stablePkgs.callPackage ./programFiles.nix (
+      programFiles = stablePkgs.callPackage ./programFiles (
         {
           inherit pname version;
           src = stablePkgs.fetchurl {

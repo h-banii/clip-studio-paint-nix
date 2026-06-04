@@ -2,14 +2,15 @@
   pname,
   version,
   src,
+
   setupLanguage ? "english",
 
   wineWow64Packages,
 
-  callPackage,
-
   winePackage ? wineWow64Packages.minimal,
   buildInstallShield,
+
+  replaceVars,
   ...
 }:
 let
@@ -30,7 +31,7 @@ buildInstallShield {
 
   inherit winePackage src;
 
-  iss = callPackage ./iss.nix {
+  iss = replaceVars ./response.iss {
     inherit version langCode;
   };
 
