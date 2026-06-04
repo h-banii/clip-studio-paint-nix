@@ -70,8 +70,8 @@ rec {
   };
 
   clip-studio-paint-v3 = buildClipStudioPaint {
-    version = "3.0.4";
-    hash = "sha256-Es3QcpTReNi2RgVP0PtInLU/OFAl6beLs2jultKcV+4=";
+    version = "3.0.8";
+    hash = "sha256-SkdYGCDyCmC/pWi9tLPz9e5e/rExDN4E1ZvVM4Kmu58=";
     tricks = [
       "dxvk"
     ];
